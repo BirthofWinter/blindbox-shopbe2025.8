@@ -1,5 +1,6 @@
 import { MidwayConfig } from '@midwayjs/core';
 import { join } from 'path';
+import path = require('path');
 
 
 export default {
@@ -12,15 +13,14 @@ export default {
 
   // TypeORM 配置，连接到 SQLite 数据库
   typeorm: {
-    dataSource: {
-      type: 'sqlite', // 使用 SQLite
-      database: join(__dirname, 'data', 'database.sqlite'), // 数据库文件路径
-      synchronize: true, // 自动同步数据库结构
-      logging: true, // 是否显示 SQL 查询日志（开发阶段建议开启）
-      entities: [
-        // 列出所有的实体文件
-        join(__dirname, '../model/**/*.ts'), // 查找 `src/model/` 下的实体类
-      ],
-    } as const, // 强制转换为常量，防止类型冲突
-  },
+  dataSource: {
+    default: {
+      type: 'sqlite',
+      database: path.join(__dirname, 'webapp.sqlite'),
+      synchronize: true,
+      logging: true,
+      entities: [join(__dirname, '../model/**/*.ts')],
+    }
+  }
+}
 } as MidwayConfig;
