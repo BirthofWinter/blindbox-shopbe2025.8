@@ -6,11 +6,13 @@ import { join } from 'path';
 // import { DefaultErrorFilter } from './filter/default.filter';
 // import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
+import * as typeorm from '@midwayjs/typeorm';
 
 @Configuration({
   imports: [
     koa,
     validate,
+    typeorm,
     {
       component: info,
       enabledEnvironment: ['local'],

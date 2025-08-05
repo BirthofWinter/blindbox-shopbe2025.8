@@ -1,6 +1,7 @@
 import { MidwayConfig } from '@midwayjs/core';
 import { join } from 'path';
 import path = require('path');
+import '../model/user';
 
 
 export default {
@@ -13,14 +14,17 @@ export default {
 
   // TypeORM 配置，连接到 SQLite 数据库
   typeorm: {
-  dataSource: {
-    default: {
-      type: 'sqlite',
-      database: path.join(__dirname, 'webapp.sqlite'),
-      synchronize: true,
-      logging: true,
-      entities: [join(__dirname, '../model/**/*.ts')],
+    dataSource: {
+      default: {
+        type: 'sqlite',
+        database: path.join(__dirname, 'webapp.sqlite'),
+        synchronize: true,
+        logging: true,
+        entities: [
+          join(process.cwd(), 'src/model/user.ts')
+        ]
+
+      }
     }
   }
-}
 } as MidwayConfig;

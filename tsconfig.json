@@ -19,8 +19,6 @@
     "rootDir": "src"
   },
   "exclude": [
-    "*.js",
-    "*.ts",
     "dist",
     "node_modules",
     "test"
