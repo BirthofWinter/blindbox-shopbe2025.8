@@ -11,6 +11,8 @@ export class UserService {
 
   async register(nickname: string, password: string): Promise<string> {
     console.log('是否获取到userRepository:', this.userRepository?.metadata);
+    console.log('userRepository:', this.userRepository);
+
     const existingUser = await this.userRepository.findOneBy({ nickname });
     if (existingUser) {
       return '用户已存在';

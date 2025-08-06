@@ -1,7 +1,6 @@
 import { MidwayConfig } from '@midwayjs/core';
 import { join } from 'path';
 import path = require('path');
-import '../model/user';
 
 
 export default {
@@ -21,7 +20,7 @@ export default {
         synchronize: true,
         logging: true,
         entities: [
-          join(process.cwd(), 'src/model/user.ts')
+          join(__dirname, '../model/**/*.ts')
         ]
 
       }

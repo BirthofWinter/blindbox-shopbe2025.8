@@ -7,6 +7,7 @@ import { join } from 'path';
 // import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
 import * as typeorm from '@midwayjs/typeorm';
+import { User } from './model/user';
 
 @Configuration({
   imports: [
@@ -29,5 +30,8 @@ export class MainConfiguration {
     this.app.useMiddleware([ReportMiddleware]);
     // add filter
     // this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
+    
+    // 确保 User 实体被正确加载
+    console.log('User entity loaded:', User);
   }
 }
