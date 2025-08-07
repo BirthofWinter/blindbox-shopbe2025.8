@@ -1,7 +1,7 @@
 import { Provide } from '@midwayjs/core';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
-import { Order } from '../model/order';
+import { Order, OrderStatus } from '../model/order';
 
 @Provide()
 export class OrderRepository {
@@ -12,8 +12,19 @@ export class OrderRepository {
     return await this.orderModel.save(order);
   }
 
-  async findAll() {
-    return await this.orderModel.find({ relations: ['creator'] });
+  async findAll(userId?: number, status?: OrderStatus) {
+    const query = this.orderModel.createQueryBuilder('order')
+      .leftJoinAndSelect('order.creator', 'creator');
+
+    if (userId) {
+      query.andWhere('creator.id = :userId', { userId });
+    }
+
+    if (status) {
+      query.andWhere('order.status = :status', { status });
+    }
+
+    return await query.getMany();
   }
 
   async findById(id: number) {

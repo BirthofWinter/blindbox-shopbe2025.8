@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './user';
+import { BlindBox } from './blindBox';
 
 @Entity('collectibles')
 export class Collectible {
@@ -7,11 +7,8 @@ export class Collectible {
   id: number;
 
   @Column()
-  type: string;
-
-  @Column()
   name: string;
 
-  @ManyToOne(() => User)
-  owner: User;
+  @ManyToOne(() => BlindBox)
+  blindBox: BlindBox;
 }

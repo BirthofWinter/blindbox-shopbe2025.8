@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Configuration, App } from '@midwayjs/core';
 import * as koa from '@midwayjs/koa';
 import * as validate from '@midwayjs/validate';

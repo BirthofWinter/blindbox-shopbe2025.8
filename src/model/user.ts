@@ -1,7 +1,13 @@
 
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
+import { Collectible } from './collectible';
 
-@Entity('users') // 明确指定表名
+interface DisplayItem {
+  collectibleId: number;
+  position: number; // 1 或 2
+}
+
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -12,5 +18,13 @@ export class User {
   @Column()
   password: string;
 
+  @Column('decimal', { default: 500 })
+  balance: number;
 
+  @ManyToMany(() => Collectible)
+  @JoinTable()
+  collectibles: Collectible[];
+
+  @Column('simple-json', { nullable: true })
+  displayItems: DisplayItem[];
 }

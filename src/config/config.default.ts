@@ -1,6 +1,9 @@
 import { MidwayConfig } from '@midwayjs/core';
-import { join } from 'path';
 import path = require('path');
+import { User } from '../model/user';
+import { BlindBox } from '../model/blindBox';
+import { Collectible } from '../model/collectible';
+import { Order } from '../model/order';
 
 
 export default {
@@ -20,8 +23,13 @@ export default {
         synchronize: true,
         logging: true,
         entities: [
-          join(__dirname, '../model/**/*.ts')
-        ]
+          User,
+          BlindBox,
+          Collectible,
+          Order
+        ],
+        autoLoadEntities: true
+
 
       }
     }

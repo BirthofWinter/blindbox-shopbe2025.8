@@ -6,8 +6,8 @@ export class CollectibleService {
   @Inject()
   collectibleRepo: CollectibleRepository;
 
-  async create(type: string, name: string, ownerId: number) {
-    return await this.collectibleRepo.createCollectible(type, name, ownerId);
+  async create(blindBoxId: number, name: string) {
+    return await this.collectibleRepo.createCollectible(blindBoxId, name);
   }
 
   async getAll() {

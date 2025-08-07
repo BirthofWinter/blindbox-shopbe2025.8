@@ -25,6 +25,14 @@ export class BlindBoxController {
 
   @Put('/:id')
   async update(@Param('id') id: number, @Body() data: Partial<BlindBox>): Promise<string> {
+    // 确保 price 为数字类型
+    if (data.price !== undefined) {
+      const price = Number(data.price);
+      if (isNaN(price)) {
+        throw new Error('价格必须是有效的数字');
+      }
+      data.price = price;
+    }
     return await this.blindBoxService.update(id, data);
   }
 

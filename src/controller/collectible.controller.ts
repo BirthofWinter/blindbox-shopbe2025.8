@@ -7,8 +7,8 @@ export class CollectibleController {
   collectibleService: CollectibleService;
 
   @Post('/')
-  async create(@Body() body: { type: string; name: string; ownerId: number }) {
-    return await this.collectibleService.create(body.type, body.name, body.ownerId);
+  async create(@Body() body: { blindBoxId: number; name: string }) {
+    return await this.collectibleService.create(body.blindBoxId, body.name);
   }
 
   @Get('/')

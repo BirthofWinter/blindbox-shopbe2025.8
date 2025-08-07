@@ -8,21 +8,20 @@ export class CollectibleRepository {
   @InjectEntityModel(Collectible)
   collectibleModel: Repository<Collectible>;
 
-  async createCollectible(type: string, name: string, ownerId: number) {
+  async createCollectible(blindBoxId: number, name: string) {
     const collectible = this.collectibleModel.create({
-      type,
       name,
-      owner: { id: ownerId } as any,
+      blindBox: { id: blindBoxId } as any,
     });
     return await this.collectibleModel.save(collectible);
   }
 
   async findAll() {
-    return await this.collectibleModel.find({ relations: ['owner'] });
+    return await this.collectibleModel.find({ relations: ['blindBox'] });
   }
 
   async findById(id: number) {
-    return await this.collectibleModel.findOne({ where: { id }, relations: ['owner'] });
+    return await this.collectibleModel.findOne({ where: { id }, relations: ['blindBox'] });
   }
 
   async deleteById(id: number) {

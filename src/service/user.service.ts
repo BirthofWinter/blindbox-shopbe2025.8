@@ -32,4 +32,16 @@ export class UserService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     return isPasswordValid ? '登录成功' : '密码错误';
   }
+
+  async findById(id: number): Promise<User | null> {
+    return await this.userRepository.findOneBy({ id });
+  }
+
+  async updateBalance(userId: number, newBalance: number): Promise<void> {
+    await this.userRepository.update(userId, { balance: newBalance });
+  }
+
+  async updateDisplayItems(userId: number, displayItems: { collectibleId: number; position: number }[]): Promise<void> {
+    await this.userRepository.update(userId, { displayItems });
+  }
 }
