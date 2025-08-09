@@ -33,6 +33,13 @@ export class UserService {
     return isPasswordValid ? '登录成功' : '密码错误';
   }
 
+  async findByNickname(nickname: string): Promise<User | null> {
+    return await this.userRepository.findOne({
+      where: { nickname },
+      relations: ['collectibles', 'collectibles.blindBox']
+    });
+  }
+
   async findById(id: number): Promise<User | null> {
     return await this.userRepository.findOne({
       where: { id },

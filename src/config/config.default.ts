@@ -14,6 +14,14 @@ export default {
     port: 7001, // 设置 Koa 服务器端口
   },
 
+  // 跨域配置
+  cors: {
+    credentials: true,
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+    allowHeaders: 'Content-Type,Authorization',
+  },
+
   // TypeORM 配置，连接到 SQLite 数据库
   typeorm: {
     dataSource: {

@@ -4,8 +4,10 @@
   "description": "",
   "private": true,
   "dependencies": {
+    "@koa/cors": "^5.0.0",
     "@midwayjs/bootstrap": "^3.20.11",
     "@midwayjs/core": "^3.20.11",
+    "@midwayjs/cross-domain": "^3.20.11",
     "@midwayjs/decorator": "^3.20.11",
     "@midwayjs/info": "^3.20.11",
     "@midwayjs/koa": "^3.20.11",
