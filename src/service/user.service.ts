@@ -34,7 +34,10 @@ export class UserService {
   }
 
   async findById(id: number): Promise<User | null> {
-    return await this.userRepository.findOneBy({ id });
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: ['collectibles', 'collectibles.blindBox']
+    });
   }
 
   async updateBalance(userId: number, newBalance: number): Promise<void> {
@@ -43,5 +46,9 @@ export class UserService {
 
   async updateDisplayItems(userId: number, displayItems: { collectibleId: number; position: number }[]): Promise<void> {
     await this.userRepository.update(userId, { displayItems });
+  }
+
+  async saveUser(user: User): Promise<User> {
+    return await this.userRepository.save(user);
   }
 }

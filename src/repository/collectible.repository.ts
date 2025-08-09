@@ -27,4 +27,13 @@ export class CollectibleRepository {
   async deleteById(id: number) {
     return await this.collectibleModel.delete(id);
   }
+
+  async findByBlindBox(blindBoxId: number) {
+    return await this.collectibleModel.find({
+      where: {
+        blindBox: { id: blindBoxId }
+      },
+      relations: ['blindBox']
+    });
+  }
 }

@@ -3,6 +3,7 @@ import { Order, OrderStatus } from '../model/order';
 import { OrderRepository } from '../repository/order.repository';
 import { UserService } from './user.service';
 import { BlindBoxService } from './blindBox.service';
+import { CollectibleService } from './collectible.service';
 
 interface CartItem {
   blindBoxId: number;
@@ -19,6 +20,9 @@ export class OrderService {
 
   @Inject()
   blindBoxService: BlindBoxService;
+
+  @Inject()
+  collectibleService: CollectibleService;
 
   async createCart(userId: number): Promise<Order> {
     const order = new Order();
@@ -105,6 +109,25 @@ export class OrderService {
 
     // 扣除用户余额
     await this.userService.updateBalance(user.id, user.balance - order.totalPrice);
+
+    // 为每个购买的盲盒随机获取收藏品
+    for (const item of order.items) {
+      for (let i = 0; i < item.quantity; i++) {
+        const randomCollectible = await this.collectibleService.getRandomCollectible(item.blindBoxId);
+        // 创建新的收藏品实例
+        const newCollectible = await this.collectibleService.create(
+          randomCollectible.blindBox.id,
+          `${randomCollectible.name} #${Math.floor(Math.random() * 10000)}`
+        );
+        if (!user.collectibles) {
+          user.collectibles = [];
+        }
+        user.collectibles.push(newCollectible);
+      }
+    }
+
+    // 保存用户的收藏品更新
+    await this.userService.saveUser(user);
 
     order.status = OrderStatus.PAID;
     order.paidAt = new Date();
